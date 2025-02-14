@@ -6,6 +6,7 @@
     <title>Quiz App</title>
     <link rel="stylesheet" href="./css/style.css">
     <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+    <script src="https://connect.facebook.net/en_US/fbinstant.6.3.js"></script>
 </head>
 <body class=" min-h-[100vh] py-6 overflow-y-auto flex flex-col justify-center items-center">
     <div class=" container w-[90%] max-w-[700px] min-h-[500px] text-red-500 bg-white p-4 rounded-xl shadow-2xl flex flex-col gap-4 text-center">
@@ -91,11 +92,18 @@
             </div>
         </div>
     </div>
-    
 
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
-    <script src="https://connect.facebook.net/en_US/fbinstant.6.3.js"></script>
+    <!-- Custom Dialog -->
+    <div id="custom-dialog" class="hidden fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+        <div class="bg-white p-6 rounded-lg shadow-lg text-center">
+            <p id="dialog-message" class="text-lg mb-4"></p>
+            <button id="dialog-ok" class="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600">OK</button>
+        </div>
+    </div>
+    
+    <!-- <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script> -->
+    <!-- <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script> -->
     <script src="./scripts/main.js"></script>
 </body>
 </html>

@@ -1,15 +1,24 @@
-const firebaseConfig = {
-    apiKey: "API_KEY",
-    authDomain: "AUTH_DOMAIN",
-    projectId: "PROJECT_ID",
-    storageBucket: "STORAGE_BUCKET",
-    messagingSenderId: "MESSAGING_SENDER_ID",
-    appId: "APP_ID",
-    databaseURL: "DATABASE_URL"
-};
+// const firebaseConfig = {
+//     apiKey: "AIzaSyB4Pz--PR2t0AM_9f3Zy8EOJlUsqroIa8E",
+//     authDomain: "sunagorik-io.firebaseapp.com",
+//     projectId: "sunagorik-io",
+//     storageBucket: "sunagorik-io.firebasestorage.app",
+//     messagingSenderId: "712940291812",
+//     appId: "1:712940291812:web:eab16c3a505e1f52ff4ef1"
+// };
 
-const app = firebase.initializeApp(firebaseConfig);
-const database = firebase.database();
+// // Initialize Firebase
+// const app = firebase.initializeApp(firebaseConfig);
+// const database = firebase.firestore(); // Initialize Firestore
+
+FBInstant.initializeAsync()
+    .then(() => {
+        console.log('Facebook Instant Games SDK initialized.');
+        // Start your game logic here
+    })
+    .catch((error) => {
+        console.error('Error initializing SDK:', error);
+});
 
 const questions = [
     {
@@ -153,7 +162,20 @@ function validateEmail(email) {
     return regex.test(email);
 }
 
-function emailSubmit () {
+function showCustomDialog(message) {
+    const dialog = getElementbyID('custom-dialog');
+    const dialogMessage = getElementbyID('dialog-message');
+    const dialogOk = getElementbyID('dialog-ok');
+
+    dialogMessage.textContent = message;
+    dialog.classList.remove("hidden");
+
+    dialogOk.addEventListener('click', () => {
+        dialog.classList.add("hidden");
+    });
+}
+
+function emailSubmit() {
     const email = document.getElementById('email').value;
     if (!validateEmail(email)) {
         alert('Please enter a valid email address.');
@@ -166,14 +188,15 @@ function emailSubmit () {
         timestamp: new Date().toISOString()
     };
 
-    database.ref('users').push(userData).then(() => {
-        alert('Thank you for submitting your email!');
+    FBInstant.player.setDataAsync(userData)
+    .then(() => {
+        showCustomDialog('Thank you for submitting your email!');
         document.getElementById('email').value = '';
         showResult();
+    }).catch((error) => {
+        showCustomDialog('There was an error submitting your email. Please try again.');
+        console.error("Error saving data: ", error);
     })
-    .catch((error) => {
-        alert('There was an error submitting your email. Please try again.');
-    });
 }
 
 function shuffle(array) {
